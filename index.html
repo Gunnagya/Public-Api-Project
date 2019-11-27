@@ -1,0 +1,88 @@
+
+<!DOCTYPE html>
+	<html>
+	<head>
+		    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+		<title>brewery</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <h1 align="center" style='color:#ffa259;'><b>TAKE CARE OF YOUR BEERBELLY</b></h1>
+  <br><br><br>
+  <h3 align="center" style='color:#ffa259;'><b>Enter state name to find its best breweries</b></h3>
+  <style>
+    body  {
+  background-image: url("https://draftmag.com/wp-content/uploads/beer-bar.jpg");
+  background-size: cover;
+
+}
+
+#div{
+	margin: 10px;
+	margin-top: 15px;
+  color: brown;
+  font-size: 19px;
+}
+
+.card{
+	border-radius: 1rem;
+box-shadow: 0 20px 40px -14px rgba(0,0,0,0.25);
+}
+
+.namee{
+	padding: 18px;
+}
+
+.cityy{
+	padding: 5px;
+}
+
+    </style>
+	</head>
+
+	<body align ="center" id="style">
+    <input type="text" placeholder="Enter state eg: california" id="input">
+			<input type="button" value="Get breweries" onclick="getResult()">
+      <br>
+			<div id="div" class="row">
+			</div>
+
+
+
+      <script>
+        function getResult(){
+					$('#div').empty();
+          var state = $("#input").val();
+            console.log(state);
+            $.ajax({
+                  method: "GET",
+                  crossDomain: true,
+                  url: "https://api.openbrewerydb.org/breweries?by_state=" + state,
+                  dataType: "json",
+                  async: true,
+                  success: function(data) {
+                    console.log(data);
+                    data.map(function(element) {
+                      // $('#div').append("Brewery Name: " + element.name + "     ");
+                      // $('#div').append("Brewery City: " + element.city + "<br>" + "<br>");
+
+
+											$('#div').append('<div class="col-sm-3">' +
+												'<div class="card" style=" width: 22rem; height: 11rem; background-color: white">' +
+													'<div class="card-body">' +
+														'<h5 class="namee card-title">' + element.name + '</h5>' +
+														'<h6 class="cityy card-subtitle mb-2 text-muted">' + element.city +'</h6>' +
+													'</div>' +
+												'</div>'+
+												'</div>'
+											);
+                    })
+                  }
+            });
+        }
+
+      </script>
+
+	</body>
+</html>
